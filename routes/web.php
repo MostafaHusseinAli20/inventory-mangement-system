@@ -56,6 +56,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
         // Delete
         Route::delete('destroy_treasury/{id}', [TreasuryController::class, 'destroy']);
 
+        // Search
+        Route::get('search', [TreasuryController::class, 'searchByName']);
         // Exports
         Route::get('export-excel', [TreasuryController::class, 'exportExcel']);
         Route::get('export-pdf', [TreasuryController::class, 'exportPdf']);

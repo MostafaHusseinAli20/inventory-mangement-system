@@ -266,7 +266,7 @@ class TreasuryRepository implements TreasuryInterface
                     ], 422);
                 }
             }
-            
+
             // ============================
             // تحديث البيانات
             // ============================
@@ -293,6 +293,29 @@ class TreasuryRepository implements TreasuryInterface
                 'line' => $e->getLine()
             ], 500);
         }
+    }
+
+    public function searchByName(Request $request)
+    {
+        $treasuries = Treasury::where('com_code', auth()->guard('admin')->user()->com_code)
+            ->where('name', 'like', '%' . $request->name . '%')
+            ->get();
+
+        $treasuries = $treasuries->map(function ($item) {
+            $dt = new DateTime($item->updated_at);
+            $item->date = $dt->format('Y-m-d');
+            $item->time = $dt->format('h:i');
+            $newDateTime = date('A', strtotime($item->time));
+            $item->newDateTimeType = $newDateTime == 'AM' ? 'صباحا' : 'مساء';
+            $item->added_by_admin = Admin::where('id', $item->added_by)->value('name');
+            $item->updated_by_admin = Admin::where('id', $item->updated_by)->value('name');
+
+            return $item;
+        });
+        return response()->json([
+            'status' => true,
+            'treasuries' => $treasuries
+        ]);
     }
 
     public function destroy(Request $request, $id)

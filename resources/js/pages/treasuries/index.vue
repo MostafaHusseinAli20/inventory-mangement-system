@@ -38,7 +38,7 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="col-md-4 d-flex justify-content-between align-items-center gap-4">
-                                <input type="text" id="search_by_text" placeholder="بحث بالاسم" class="form-control"><br>
+                                <input type="text" v-model="searchText" placeholder="بحث بالاسم" class="form-control"><br>
                                 
                                 <div class="d-flex justify-content-between align-items-center gap-4">
                                     <a href="/admin/treasuries/export-excel" class="btn btn-sm btn-primary">تصدير excel</a>
@@ -143,13 +143,25 @@ export default {
             time: '',
             date: '',
             newDateTimeType: '',
-            loading: false
+            loading: false,
+            searchText: '',
+            timer: null
         }
     },
     mounted() {
         this.getTreasuries();
+        this.searchTreasuries("");
         var title = document.getElementById("title");
         title.innerHTML = this.title;
+    },
+    watch:{
+        searchText(newValue) {
+            // Debounce لمنع الإرسال كل حرف = أفضل أداء
+            clearTimeout(this.typingTimer);
+            this.timer = setTimeout(() => {
+                this.searchTreasuries(newValue);
+            }, 300);
+        }
     },
     methods: {
         getTreasuries() {
@@ -201,7 +213,19 @@ export default {
                         console.log(error.response?.data || error.message);
                     });
             }
-        }
+        },
+        
+        searchTreasuries(name) {
+            axios.get('/admin/treasuries/search', {
+                params: {
+                    name: name
+                }
+            }).then((response) => {
+                this.treasuries = response.data.treasuries;
+            }).catch((error) => {
+                console.log(error.response?.data || error.message);
+            })
+        },
     }
 }
 </script>

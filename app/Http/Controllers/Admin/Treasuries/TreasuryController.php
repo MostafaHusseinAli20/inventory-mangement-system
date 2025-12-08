@@ -61,6 +61,11 @@ class TreasuryController extends Controller
         return $this->treasuryInterface->update($request, $id);
     }
 
+    public function searchByName(Request $request)
+    {
+        return $this->treasuryInterface->searchByName($request);
+    }
+
     public function destroy(Request $request, $id)
     {
         return $this->treasuryInterface->destroy($request, $id);

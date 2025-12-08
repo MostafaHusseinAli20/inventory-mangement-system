@@ -17,4 +17,5 @@ interface TreasuryInterface
     public function edit($id);
     public function update(TreasuryRequest $request, $id);
     public function destroy(Request $request, $id);
+    public function searchByName(Request $request);
 }

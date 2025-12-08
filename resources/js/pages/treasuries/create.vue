@@ -112,7 +112,16 @@ export default {
                             showConfirmButton: false,
                             timer: 2000,
                         });
-                    } else {
+                    } else if(res.data.message == 'اسم الصندوق موجود بالفعل')
+                    {
+                        Swal.fire({
+                            icon: 'error',
+                            title: res.data.message,
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    }
+                    else {
                         Swal.fire({
                             icon: 'success',
                             title: res.data.message,
