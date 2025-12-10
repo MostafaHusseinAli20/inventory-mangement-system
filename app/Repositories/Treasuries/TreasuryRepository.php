@@ -24,7 +24,7 @@ class TreasuryRepository implements TreasuryInterface
     public function get_treasury_data()
     {
         $treasuries = Treasury::where('com_code', auth()->guard('admin')->user()->com_code)
-            ->paginate(PAGINATE_COUNT);
+            ->orderBy('id', 'desc')->paginate(PAGINATE_COUNT);
 
         if (!empty($treasuries)) { {
                 foreach ($treasuries as $treasury) {
@@ -65,6 +65,22 @@ class TreasuryRepository implements TreasuryInterface
                 ->where('com_code', $com_code)
                 ->first();
 
+            if(
+                !$request->all() ||
+                empty($request->all()) || 
+                $request->name == '' || 
+                $request->is_master == '' || 
+                $request->last_recipt_exchange == '' || 
+                $request->last_recipt_collect == '' || 
+                $request->active == ''
+            ) {
+                DB::rollBack();
+                return response()->json([
+                    'status' => false,
+                    'message' => 'يرجى تعبئة الحقول المطلوبة',
+                ], 422);
+            }
+            
             if (!$checkExists || $checkExists == null) {
                 if ($request->is_master == 1) {
                     DB::rollBack();
