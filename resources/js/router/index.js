@@ -4,6 +4,8 @@ import SettingsPage from "../pages/settings/index.vue";
 import TreasuriesPage from "../pages/treasuries/index.vue"
 import TreasuriesCreatePage from "../pages/treasuries/create.vue"
 import TreasuriesEditPage from "../pages/treasuries/edit.vue"
+import TreasuriesDetailsPage from '../pages/treasuries/details.vue'
+import TreasuriesDeliveryCreatePage from '../pages/treasuries/delivery/create.vue'
 
 const routes = [
     {
@@ -30,6 +32,16 @@ const routes = [
         path: "/admin/treasuries/:id/edit",
         name: "treasuries.edit",
         component: TreasuriesEditPage,
+    },
+    {
+        path: "/admin/treasuries/:id/details",
+        name: "treasuries.details",
+        component: TreasuriesDetailsPage,
+    },
+    {
+        path: "/admin/treasuries/:id/delivery/create",
+        name: "treasuries.delivery.create",
+        component: TreasuriesDeliveryCreatePage,
     },
 ];
 

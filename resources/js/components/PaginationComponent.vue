@@ -19,6 +19,9 @@ export default {
         },
         perPage: {
             type: Number, default: 5
+        },
+        collection: {
+            type: String, required: true
         }
     },
     data() {
@@ -41,8 +44,9 @@ export default {
                     per_page: this.perPage
                 }
             });
-            this.total = response.data.treasuries.total;
-            this.$emit('dataLoaded', response.data.treasuries.data);
+            const result = response.data[this.collection];
+            this.total = result.total;
+            this.$emit('dataLoaded', result.data);
         }
     }
 }

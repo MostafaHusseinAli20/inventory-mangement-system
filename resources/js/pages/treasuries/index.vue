@@ -60,9 +60,9 @@
                                         <th>تاريخ اخر تحديث</th>
                                         <th>العمليات</th>
                                     </thead>
-                                    <tbody v-for="(treasury, index) in treasuries" :key="treasury.id">
+                                    <tbody v-for="treasury in treasuries" :key="treasury.id">
                                         <tr>
-                                            <td>{{ index + 1 }}</td>
+                                            <td>{{ treasury.id }}</td>
                                             <td>{{ treasury.name }}</td>
 
                                             <td>
@@ -98,8 +98,12 @@
                                             </td>
 
                                             <td>
+                                                <!-- v-if="treasury.is_master == 1" -->
+                                                <router-link :to="{name: 'treasuries.details', params: {id: treasury.id}}" 
+                                                    class="btn btn-sm btn-warning mr-1">المزيد</router-link>
+
                                                 <router-link :to="{name: 'treasuries.edit', params: {id: treasury.id}}" 
-                                                    class="btn btn-sm btn-warning mr-1">تعديل</router-link>
+                                                    class="btn btn-sm btn-info mr-1">تعديل</router-link>
                                                     
                                                 <button @click="deleteTreasury(treasury.id)" type="button"
                                                     class="btn btn-sm btn-danger mr-1">حذف</button>
@@ -107,8 +111,12 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <PaginationComponent fetchUrl="/admin/treasuries/get_treasury_data" :perPage="10"
-                                    @dataLoaded="treasuries = $event" />
+                                <PaginationComponent 
+                                    fetchUrl="/admin/treasuries/get_treasury_data" 
+                                    :perPage="10"
+                                    collection="treasuries"
+                                    @dataLoaded="treasuries = $event"
+                                />
                             </div>
 
                             <div v-else>
@@ -214,11 +222,11 @@ export default {
                     });
             }
         },
-        
+
         searchTreasuries(name) {
             axios.get('/admin/treasuries/search', {
                 params: {
-                    name: name
+                    name: name,
                 }
             }).then((response) => {
                 this.treasuries = response.data.treasuries;

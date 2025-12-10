@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Treasuries;
 
+use App\Http\Requests\Admin\Treasuries\TreasuryDeliveryRequest;
 use App\Interfaces\Treasuries\TreasuryInterface;
 use App\Models\Admin;
 use App\Models\Treasury;
@@ -11,6 +12,7 @@ use DateTime;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\Admin\Treasuries\TreasuryRequest;
+use App\Models\TreasuryDelivery;
 
 class TreasuryRepository implements TreasuryInterface
 {
@@ -299,7 +301,7 @@ class TreasuryRepository implements TreasuryInterface
     {
         $treasuries = Treasury::where('com_code', auth()->guard('admin')->user()->com_code)
             ->where('name', 'like', '%' . $request->name . '%')
-            ->get();
+            ->paginate(PAGINATE_COUNT);
 
         $treasuries = $treasuries->map(function ($item) {
             $dt = new DateTime($item->updated_at);
@@ -312,6 +314,7 @@ class TreasuryRepository implements TreasuryInterface
 
             return $item;
         });
+
         return response()->json([
             'status' => true,
             'treasuries' => $treasuries
@@ -325,6 +328,132 @@ class TreasuryRepository implements TreasuryInterface
         return response()->json([
             'status' => true,
             'message' => 'تم حذف الصندوق بنجاح'
+        ]);
+    }
+
+    public function detailsPage($id)
+    {
+        return view('admin.treasuries.details');
+    }
+
+    public function details(Request $request, $id)
+    {
+        $treasury = Treasury::where('com_code', auth()->guard('admin')->user()->com_code)
+            ->where('id', $id)
+            ->firstOrFail();
+
+        if (!empty($treasury)) {
+            $dt = new DateTime($treasury['updated_at']);
+            $date = $dt->format('Y-m-d');
+            $time = $dt->format('h:i');
+            $newDateTime = date('A', strtotime($time));
+            $newDateTimeType = $newDateTime == 'AM' ? 'صباحا ' : 'مساء';
+            $treasury->added_by_admin = Admin::where('id', $treasury->added_by)->value('name');
+            if ($treasury->updated_by != null || $treasury->updated_by > 0) {
+                $treasury->updated_by_admin = Admin::where('id', $treasury->updated_by)->value('name');
+            }
+        }
+
+        $treasuries_delivery = TreasuryDelivery::where('com_code', auth()->guard('admin')->user()->com_code)
+            ->where('treasury_id', $id)
+            ->get();
+
+        if (!empty($treasuries_delivery)) {
+            foreach ($treasuries_delivery as $treasury_delivery) {
+                $treasury_delivery->added_by_admin = Admin::where('id', $treasury_delivery->added_by)->value('name');
+                if ($treasury_delivery->updated_by != null || $treasury_delivery->updated_by > 0) {
+                    $treasury_delivery->updated_by_admin = Admin::where('id', $treasury_delivery->updated_by)->value('name');
+                }
+                $treasury_delivery->name = Treasury::where('com_code', auth()->guard('admin')->user()->com_code)
+                    ->where('id', $treasury_delivery->treasury_can_delivery_id)
+                    ->value('name');
+            }
+        }
+
+        $treasuries_delivery->map(function ($item) {
+            $dt = new DateTime($item->updated_at);
+            $item->date = $dt->format('Y-m-d');
+            $item->time = $dt->format('h:i');
+            $newDateTime = date('A', strtotime($item->time));
+            $item->newDateTimeType = $newDateTime == 'AM' ? 'صباحا' : 'مساء';
+            return $item;
+        });
+
+        return response()->json([
+            'status' => true,
+            'treasury' => $treasury,
+            'treasuries_delivery' => $treasuries_delivery,
+            'date' => $date,
+            'time' => $time,
+            'newDateTimeType' => $newDateTimeType,
+        ]);
+    }
+
+    public function treasury_delivery_create()
+    {
+        return view('admin.treasuries.treasury_delivery_create');
+    }
+
+    public function get_treasury_delivery_data(Request $request)
+    {
+        $treasury = Treasury::where('com_code', auth()->guard('admin')->user()->com_code)
+            ->where('is_master', 0)
+            ->get();
+
+        return response()->json([
+            'status' => true,
+            'treasury' => $treasury,
+        ]);
+    }
+
+    public function treasury_delivery_store(TreasuryDeliveryRequest $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $com_code = auth()->guard('admin')->user()->com_code;
+            $checkExists = TreasuryDelivery::where('treasury_id', $id)
+                ->where('treasury_can_delivery_id', $request->treasury_can_delivery_id)
+                ->where('com_code', $com_code)
+                ->first();
+
+            if ($checkExists != null) {
+                DB::rollBack();
+                return response()->json([
+                    'status' => false,
+                    'message' => 'الصندوق المستلم موجود بالفعل',
+                ], 422);
+            }
+
+            TreasuryDelivery::create([
+                'com_code' => $com_code,
+                'treasury_id' => $id,
+                'treasury_can_delivery_id' => $request->treasury_can_delivery_id,
+                'added_by' => auth()->guard('admin')->user()->id,
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'تم اضافة الصندوق المستلم بنجاح',
+            ], 200);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ], 500);
+        }
+    }
+
+    public function treasury_delivery_destroy($id)
+    {
+        $treasury = TreasuryDelivery::findOrFail($id);
+        $treasury->delete();
+        return response()->json([
+            'status' => true,
+            'message' => 'تم حذف الصندوق المستلم بنجاح'
         ]);
     }
 }

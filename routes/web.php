@@ -38,29 +38,32 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
     Route::group(['prefix' => 'treasuries'], function () {
         Route::get('/', [TreasuryController::class, 'index'])
             ->name('treasury.index');
-
         // Get
         Route::get('get_treasury_data', [TreasuryController::class, 'get_treasury_data']);
-
         // Store
         Route::get('/create', [TreasuryController::class, 'create']);
         Route::post('store_treasury_data', [TreasuryController::class, 'store']);
-
         // Edit
         Route::get('{id}/edit', [TreasuryController::class, 'edit']);
         Route::put('{id}/update', [TreasuryController::class, 'update']);
-
         // Show
         Route::get('{id}/show', [TreasuryController::class, 'show']);
-
         // Delete
         Route::delete('destroy_treasury/{id}', [TreasuryController::class, 'destroy']);
-
         // Search
         Route::get('search', [TreasuryController::class, 'searchByName']);
         // Exports
         Route::get('export-excel', [TreasuryController::class, 'exportExcel']);
         Route::get('export-pdf', [TreasuryController::class, 'exportPdf']);
+        // Deatails
+        Route::get('{id}/details', [TreasuryController::class, 'detailsPage']); // blade
+        Route::get('{id}/get_details', [TreasuryController::class, 'details']); // => json
+        // Add TreasuryDelivery
+        Route::get('{id}/delivery/create', [TreasuryController::class, 'treasury_delivery_create']); // blade
+        Route::post('{id}/store-treasury-delivery', [TreasuryController::class, 'treasury_delivery_store']); // => json
+        Route::get('get-treasury-delivery-data', [TreasuryController::class, 'get_treasury_delivery_data']); // => json
+        // Delete
+        Route::delete('{id}/treasury-delivery-destroy', [TreasuryController::class, 'treasury_delivery_destroy']);
     });
 
     // Profile Management
