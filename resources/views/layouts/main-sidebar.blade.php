@@ -45,7 +45,8 @@
                         {{-- @endif --}}
                         {{-- @if (check_permission_sub_menue(2) == true)   --}}
                         <li class="nav-item">
-                            <a href="{{ route('treasury.index') }}" class="nav-link {{ request()->is('admin/treasuries*') ? 'active' : '' }}">
+                            <a href="{{ route('treasury.index') }}"
+                                class="nav-link {{ request()->is('admin/treasuries*') ? 'active' : '' }}">
                                 <p>بيانات الخزن</p>
                             </a>
                         </li>
@@ -105,6 +106,39 @@
                             </a>
                             <ul class="nav nav-treeview">
                             </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li
+                    class="nav-item has-treeview {{ (request()->is('admin/sales-matrial-types*') || request()->is('admin/stores*') || request()->is('admin/uoms*') || request()->is('admin/inv_itemcard_categories*') || request()->is('admin/itemcard*') and !request()->is('admin/itemcardBalance*') and !request()->is('admin/stores_inventory*')) ? 'menu-open' : '' }}     ">
+                    <a href="#"
+                        class="nav-link {{ (request()->is('admin/sales-matrial-types*') || request()->is('admin/stores*') || request()->is('admin/uoms*') || request()->is('admin/inv_itemcard_categories*') || request()->is('admin/itemcard*') and !request()->is('admin/itemcardBalance*') and !request()->is('admin/stores_inventory*')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            ضبط المخازن
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('sales-matrial-types.index') }}"
+                                class="nav-link {{ request()->is('admin/sales-matrial-types*') ? 'active' : '' }}">
+
+                                <p>
+                                    بيانات فئات الفواتير
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href=""
+                                class="nav-link {{ request()->is('admin/stores*') ? 'active' : '' }}">
+                                
+                                <p>
+                                    بيانات المخازن
+                                </p>
+                            </a>
                         </li>
                     </ul>
                 </li>

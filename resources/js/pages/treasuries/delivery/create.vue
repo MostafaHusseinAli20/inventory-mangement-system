@@ -70,7 +70,7 @@ import Swal from 'sweetalert2';
 export default {
     data() {
         return {
-            BCardTitle: 'اضافة خزن للاستلام منها للخزنة',
+            title: 'اضافة خزن للاستلام منها للخزنة الرئيسية',
             loading: false,
             treasuries: {},
             errors: {},
@@ -78,6 +78,8 @@ export default {
     },
     mounted() {
         this.getTreasuryCanDeliveryId();
+        var title = document.getElementById("title");
+        title.innerHTML = this.title;
     },
     methods: {
         async getTreasuryCanDeliveryId() {

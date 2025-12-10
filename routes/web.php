@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\SalesMatrial\SalesMatrialTypesController;
 use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\Admin\Treasuries\TreasuryController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -64,6 +65,27 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
         Route::get('get-treasury-delivery-data', [TreasuryController::class, 'get_treasury_delivery_data']); // => json
         // Delete
         Route::delete('{id}/treasury-delivery-destroy', [TreasuryController::class, 'treasury_delivery_destroy']);
+    });
+
+    // Sales Matrial Types
+    Route::group(['prefix' => 'sales-matrial-types'], function () {
+        Route::get('/',[SalesMatrialTypesController::class, 'index'])->name('sales-matrial-types.index');
+        // Get Data
+        Route::get('get-sales-matrial-types-data', [SalesMatrialTypesController::class, 'getSalesMatrialTypeData']);
+        // Create
+        Route::get('/create', [SalesMatrialTypesController::class, 'create']);
+        // Store
+        Route::post('/store', [SalesMatrialTypesController::class, 'storeData']);
+        //Show
+        Route::get('/{id}/show', [SalesMatrialTypesController::class, 'show']);
+        //Edit
+        Route::get('/{id}/edit', [SalesMatrialTypesController::class, 'edit']);
+        Route::put('/{id}/update', [SalesMatrialTypesController::class, 'updateData']);
+        // Delete
+        Route::delete('{id}/destroy', [SalesMatrialTypesController::class, 'destroy']);
+        // Exports
+        Route::get('export-excel', [SalesMatrialTypesController::class, 'exportExcel']);
+        Route::get('export-pdf', [SalesMatrialTypesController::class, 'exportPdf']);
     });
 
     // Profile Management
