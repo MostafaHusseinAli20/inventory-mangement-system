@@ -132,7 +132,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href=""
+                            <a href="{{ route('stores.index') }}"
                                 class="nav-link {{ request()->is('admin/stores*') ? 'active' : '' }}">
                                 
                                 <p>

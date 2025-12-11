@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\SalesMatrial\SalesMatrialTypesController;
 use App\Http\Controllers\Admin\Settings\SettingController;
+use App\Http\Controllers\Admin\Stores\StoreController;
 use App\Http\Controllers\Admin\Treasuries\TreasuryController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
@@ -86,6 +87,27 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
         // Exports
         Route::get('export-excel', [SalesMatrialTypesController::class, 'exportExcel']);
         Route::get('export-pdf', [SalesMatrialTypesController::class, 'exportPdf']);
+    });
+
+    // Stores
+    Route::group(['prefix' => 'stores'], function () {
+       Route::get('/', [StoreController::class, 'index'])->name('stores.index');
+       Route::get('/get-stores-data', [StoreController::class, 'getStoreData']);
+       //Create
+       Route::get('/create', [StoreController::class, 'create']);
+       Route::post('/store-data', [StoreController::class, 'store']);
+       // Edit
+       Route::get('/{id}/edit', [StoreController::class, 'edit']);
+       Route::put('/{id}/update-data', [StoreController::class, 'update']);
+       //Show
+       Route::get('/{id}/show', [StoreController::class, 'show']);
+       // Delete
+       Route::delete('/{id}/destroy', [StoreController::class, 'destroy']);
+       // Exports
+       Route::get('export-excel', [StoreController::class, 'exportExcel']);
+       Route::get('export-pdf', [StoreController::class, 'exportPdf']);
+       // Search
+       Route::get('search', [StoreController::class, 'searchByName']);
     });
 
     // Profile Management
