@@ -30,7 +30,7 @@ class SettingRequest extends FormRequest
             'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'favicon' => ['nullable', 'image', 'mimes:png,jpg,svg', 'max:2048'],
             'address' => ['sometimes', 'required', 'string', 'max:255'],
-            'phone' => ['sometimes', 'required'],
+            'phone' => ['sometimes', 'required', 'regex:/^(010|011|012|015)[0-9]{8}$/'],
             'email' => [
                 'sometimes',
                 'required',
@@ -59,13 +59,13 @@ class SettingRequest extends FormRequest
             'email.email' => 'البريد الالكتروني غير صحيح',
             'email.unique' => 'البريد الالكتروني موجود بالفعل',
             'phone.numeric' => 'رقم الهاتف يجب ان يكون رقم',
-            'phone.max' => 'رقم الهاتف يجب ان يكون اقل من 12 رقم',
             'added_by.required' => 'مسؤول الشركة مطلوب',
             'updated_by.required' => 'مسؤول التحديث مطلوب',
             'com_code.required' => 'كود الشركة مطلوب',
             'general_alert.required' => 'تنبيه عام مطلوب',
             'active.required' => 'حالة الشركة مطلوب',
             'active.boolean' => 'حالة الشركة يجب ان تكون صحيحة',
+            'phone.regex' => 'رقم الهاتف غير صحيح',
         ];
     }
 }

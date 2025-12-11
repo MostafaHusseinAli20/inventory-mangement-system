@@ -9,6 +9,9 @@ import TreasuriesDeliveryCreatePage from '../pages/treasuries/delivery/create.vu
 import SalesMatrialTypesPage from "../pages/sales-matrial-types/index.vue";
 import SalesMatrialTypesCreatePage from "../pages/sales-matrial-types/create.vue";
 import SalesMatrialTypesEditPage from "../pages/sales-matrial-types/edit.vue";
+import StoreIndexPage from '../pages/stores/index.vue';
+import StoreCreatePage from '../pages/stores/create.vue';
+import StoreEdirPage from '../pages/stores/edit.vue';
 
 const routes = [
     // Settings
@@ -65,6 +68,23 @@ const routes = [
         path: "/admin/sales-matrial-types/:id/edit",
         name: "sales-matrial-types.edit",
         component: SalesMatrialTypesEditPage,
+    },
+
+    //Store
+    {
+        path: "/admin/stores",
+        name: "stores.index",
+        component: StoreIndexPage,
+    },
+    {
+        path: "/admin/stores/create",
+        name: "stores.create",
+        component: StoreCreatePage,
+    },
+    {
+        path: "/admin/stores/:id/edit",
+        name: "stores.edit",
+        component: StoreEdirPage,
     },
 ];
 
