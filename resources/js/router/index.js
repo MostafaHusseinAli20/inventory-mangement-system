@@ -12,6 +12,9 @@ import SalesMatrialTypesEditPage from "../pages/sales-matrial-types/edit.vue";
 import StoreIndexPage from '../pages/stores/index.vue';
 import StoreCreatePage from '../pages/stores/create.vue';
 import StoreEdirPage from '../pages/stores/edit.vue';
+import UomIndexPage from '../pages/uoms/index.vue';
+import UomCreatePage from '../pages/uoms/create.vue';
+import UomEditPage from '../pages/uoms/edit.vue';
 
 const routes = [
     // Settings
@@ -85,6 +88,23 @@ const routes = [
         path: "/admin/stores/:id/edit",
         name: "stores.edit",
         component: StoreEdirPage,
+    },
+
+    // Uoms
+    {
+        path: "/admin/uoms",
+        name: "uoms.index",
+        component: UomIndexPage,
+    },
+    {
+        path: "/admin/uoms/create",
+        name: "uoms.create",
+        component: UomCreatePage,
+    },
+    {
+        path: "/admin/uoms/:id/edit",
+        name: "uoms.edit",
+        component: UomEditPage,
     },
 ];
 

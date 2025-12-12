@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Stores;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -23,7 +24,10 @@ class StoreRequest extends FormRequest
     {
         if($this->isMethod('post')) {
             return [
-                'name' => ['required', 'string', 'max:255', 'unique:stores,name'],
+                'name' => ['required', 'string', 'max:255', 
+                Rule::unique('stores', 'name')
+                    ->where('com_code', auth()->guard('admin')->user()->com_code)
+            ],
                 'active' => ['required', 'boolean'],
                 'com_code' => ['nullable', 'numeric', 'exists:admins,com_code'],
                 'address' => ['required', 'string', 'max:255'],
@@ -31,7 +35,11 @@ class StoreRequest extends FormRequest
             ];
         } elseif($this->isMethod('put')) {
             return [
-                'name' => ['required', 'string', 'max:255', 'unique:stores,name,'.$this->id],
+                'name' => ['required', 'string', 'max:255', 
+                Rule::unique('stores', 'name')
+                ->where('com_code', auth()->guard('admin')->user()->com_code)
+                ->ignore($this->id)
+            ],
                 'active' => ['nullable', 'boolean'],
                 'com_code' => ['nullable', 'numeric', 'exists:admins,com_code'],
                 'address' => ['nullable', 'string', 'max:255'],

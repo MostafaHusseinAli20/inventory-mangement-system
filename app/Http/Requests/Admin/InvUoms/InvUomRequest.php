@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Admin\SalesMatrialTypes;
+namespace App\Http\Requests\Admin\InvUoms;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class SalesMatrialTypesRequest extends FormRequest
+class InvUomRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,30 +22,29 @@ class SalesMatrialTypesRequest extends FormRequest
      */
     public function rules(): array
     {
-        if ($this->isMethod('post')) {
+        if ($this->method() == 'POST') {
             return [
                 'name' => [
                     'required',
                     'string',
                     'max:255',
-                    Rule::unique('sales_matrial_types', 'name')
+                    Rule::unique('inv_uoms', 'name')
                         ->where('com_code', auth()->guard('admin')->user()->com_code)
                 ],
-                'active' => ['nullable', 'boolean'],
+                'is_master' => ['required', 'boolean'],
                 'com_code' => ['nullable', 'numeric', 'exists:admins,com_code'],
+                'active' => ['required', 'boolean'],
             ];
-        } elseif ($this->isMethod('put')) {
+        } else if ($this->method() == 'PUT') {
             return [
-                'name' => [
-                'required', 
-                'string', 
-                'max:255', 
-                Rule::unique('sales_matrial_types', 'name')
-                ->where('com_code', auth()->guard('admin')->user()->com_code)    
+                'name' => ['sometimes', 'required', 'string', 'max:255', 
+                Rule::unique('inv_uoms', 'name')
+                ->where('com_code', auth()->guard('admin')->user()->com_code)
                 ->ignore($this->id)
             ],
-                'active' => ['nullable', 'boolean'],
+                'is_master' => ['sometimes', 'required', 'boolean'],
                 'com_code' => ['nullable', 'numeric', 'exists:admins,com_code'],
+                'active' => ['required', 'boolean'],
             ];
         }
         return [];
@@ -54,10 +53,11 @@ class SalesMatrialTypesRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'يرجي ادخال الاسم',
-            'name.string' => 'يرجي ادخال الاسم بشكل صحيح',
-            'name.max' => 'يرجي ادخال الاسم بشكل صحيح',
+            'name.required' => 'الاسم مطلوب',
             'name.unique' => 'الاسم موجود مسبقا',
+            'is_master.required' => 'نوع الوحدة مطلوبة',
+            'active.required' => 'حالة الوحدة مطلوبة',
+            'active.boolean' => 'حالة الوحدة يجب ان تكون صحيحة',
         ];
     }
 }

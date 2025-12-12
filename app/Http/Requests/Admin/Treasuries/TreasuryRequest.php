@@ -24,7 +24,13 @@ class TreasuryRequest extends FormRequest
     {
         if ($this->method() == 'post') {
             return [
-                'name' => ['required', 'string', 'max:255', 'unique:treasuries,name'],
+                'name' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    Rule::unique('treasuries', 'name')
+                        ->where('com_code', auth()->guard('admin')->user()->com_code)
+                ],
                 'is_master' => ['required', 'boolean'],
                 'last_recipt_exchange' => ['required', 'integer', 'min:0'],
                 'last_recipt_collect' => ['required', 'integer', 'min:0'],
@@ -37,11 +43,13 @@ class TreasuryRequest extends FormRequest
         } elseif ($this->method() == 'put') {
             return [
                 'name' => [
-                    'sometimes', 
-                    'required', 
-                    'string', 
-                    'max:255', 
-                    Rule::unique('treasuries', 'name')->ignore($this->id)
+                    'sometimes',
+                    'required',
+                    'string',
+                    'max:255',
+                    Rule::unique('treasuries', 'name')
+                        ->where('com_code', auth()->guard('admin')->user()->com_code)
+                        ->ignore($this->id)
                 ],
                 'is_master' => ['sometimes', 'required', 'boolean'],
                 'last_recipt_exchange' => ['sometimes', 'required', 'integer', 'min:0'],

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\SalesMatrial\SalesMatrialTypesController;
 use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\Admin\Stores\StoreController;
 use App\Http\Controllers\Admin\Treasuries\TreasuryController;
+use App\Http\Controllers\Admin\Uoms\InvUomController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -14,7 +15,7 @@ Route::get('/main', function () {
     return view('admin.index');
 })->middleware(['auth:admin', 'verified'])->name('dashboard');
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'verified']], function () {
 
     define('PAGINATE_COUNT', 10);
     // Accounts
@@ -108,6 +109,29 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () 
        Route::get('export-pdf', [StoreController::class, 'exportPdf']);
        // Search
        Route::get('search', [StoreController::class, 'searchByName']);
+    });
+
+    // Uoms
+    Route::group(['prefix' => 'uoms'], function () {
+       Route::get('/', [InvUomController::class, 'index'])->name('uoms.index');
+       Route::get('/get-uoms-data', [InvUomController::class, 'getUomData']);
+       //Create
+       Route::get('/create', [InvUomController::class, 'create']);
+       Route::post('/store', [InvUomController::class, 'store']);
+       // Edit
+       Route::get('{id}/edit', [InvUomController::class, 'edit']);
+       Route::put('{id}/update', [InvUomController::class, 'update']);
+       //Show
+       Route::get('{id}/show', [InvUomController::class, 'show']);
+       // Delete
+       Route::delete('{id}/destroy', [InvUomController::class, 'destroy']);
+       // Exports
+       Route::get('export-excel', [InvUomController::class, 'exportExcel']);
+       Route::get('export-pdf', [InvUomController::class, 'exportPdf']);
+       // Search
+       Route::get('search', [InvUomController::class, 'searchByName']);
+       // Filter By Type
+       Route::get('filter-by-type', [InvUomController::class, 'filterByType']);
     });
 
     // Profile Management
