@@ -59,68 +59,81 @@ class TreasuryRepository implements TreasuryInterface
     public function store(TreasuryRequest $request)
     {
         DB::beginTransaction();
-        try {
-            $com_code = auth()->guard('admin')->user()->com_code;
-            $checkExists = Treasury::where('name', $request->name)
-                ->where('com_code', $com_code)
-                ->first();
 
-            if(
+        try {
+
+            $com_code = auth()->guard('admin')->user()->com_code;
+
+            // 1. Validation (أنصحك تخليها في FormRequest)
+            if (
                 !$request->all() ||
-                empty($request->all()) || 
-                $request->name == '' || 
-                $request->is_master == '' || 
-                $request->last_recipt_exchange == '' || 
-                $request->last_recipt_collect == '' || 
-                $request->active == ''
+                $request->name == '' ||
+                $request->is_master === '' ||
+                $request->last_recipt_exchange === '' ||
+                $request->last_recipt_collect === '' ||
+                $request->active === ''
             ) {
                 DB::rollBack();
                 return response()->json([
                     'status' => false,
-                    'message' => 'يرجى تعبئة الحقول المطلوبة',
+                    'message' => 'يرجى تعبئة الحقول المطلوبة',
                 ], 422);
             }
-            
-            if (!$checkExists || $checkExists == null) {
-                if ($request->is_master == 1) {
-                    DB::rollBack();
-                    return response()->json([
-                        'status' => false,
-                        'message' => 'مسموح بصندوق رئيسي واحد فقط',
-                    ]);
-                } else {
-                    Treasury::create([
-                        'name' => $request->name,
-                        'is_master' => $request->is_master,
-                        'last_recipt_exchange' => $request->last_recipt_exchange,
-                        'last_recipt_collect' => $request->last_recipt_collect,
-                        'added_by' => auth()->guard('admin')->user()->id,
-                        'com_code' => $com_code,
-                        'active' => $request->active,
-                        'date' => $request->date,
-                    ]);
 
-                    DB::commit();
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'تم اضافة الصندوق بنجاح'
-                    ]);
-                }
-            } else {
+            // 2. هل الاسم موجود بالفعل داخل الشركة؟
+            $checkNameExists = Treasury::where('name', $request->name)
+                ->where('com_code', $com_code)
+                ->first();
+
+            if ($checkNameExists) {
+                DB::rollBack();
                 return response()->json([
                     'status' => false,
                     'message' => 'اسم الصندوق موجود بالفعل',
-                ]);
+                ], 422);
             }
+
+            // 3. هل يوجد صندوق رئيسي في الشركة؟
+            $existingMaster = Treasury::where('com_code', $com_code)
+                ->where('is_master', 1)
+                ->first();
+
+            // 4. لو المستخدم عايز يضيف صندوق رئيسي جديد
+            if ($request->is_master == 1 && $existingMaster) {
+                DB::rollBack();
+                return response()->json([
+                    'status' => false,
+                    'message' => 'مسموح بصندوق رئيسي واحد فقط',
+                ], 422);
+            }
+
+            // 5. إنشاء الصندوق
+            Treasury::create([
+                'name' => $request->name,
+                'is_master' => $request->is_master,
+                'last_recipt_exchange' => $request->last_recipt_exchange,
+                'last_recipt_collect' => $request->last_recipt_collect,
+                'added_by' => auth()->guard('admin')->user()->id,
+                'com_code' => $com_code,
+                'active' => $request->active,
+                'date' => $request->date,
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'تم إضافة الصندوق بنجاح'
+            ]);
+
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
                 'status' => false,
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
+                'message' => 'Error: ' . $e->getMessage(),
             ], 500);
         }
+
     }
 
     public function exportExcel()

@@ -140,6 +140,16 @@
                                 </p>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('uoms.index') }}"
+                                class="nav-link {{ request()->is('admin/uoms*') ? 'active' : '' }}">
+                                
+                                <p>
+                                    بيانات الوحدات
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
         </nav>

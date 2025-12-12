@@ -134,15 +134,12 @@ export default {
                 })
                 .catch((error) => {
                     if (error.response.status === 422) {
-                        if(error.response.data.message == 'يرجى تعبئة الحقول المطلوبة')
-                        {
-                            Swal.fire({
-                                icon: 'error',
-                                title: error.response.data.message,
-                                showConfirmButton: false,
-                                timer: 5000,
-                            })
-                        }
+                        Swal.fire({
+                            icon: 'error',
+                            title: error.response.data.message,
+                            showConfirmButton: false,
+                            timer: 5000,
+                        })
                         this.errors = error.response.data.errors;
                     }
 
