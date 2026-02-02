@@ -14,7 +14,7 @@ class SalesMatrialTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('sales_matrial_types')->truncate();
+        // DB::table('sales_matrial_types')->truncate();
         SalesMatrialType::factory(20)->create();
     }
 }

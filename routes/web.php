@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\InvItemCardCategories\InvItemCardCategoryController;
+use App\Http\Controllers\Admin\InvItemCards\InvItemCardController;
 use App\Http\Controllers\Admin\SalesMatrial\SalesMatrialTypesController;
 use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\Admin\Stores\StoreController;
@@ -134,6 +136,59 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'verified']], 
        Route::get('filter-by-type', [InvUomController::class, 'filterByType']);
     });
 
+    // Inv Item Card Categories
+    Route::group(['prefix' => 'item-card-categories'], function () {
+        Route::get('/', [InvItemCardCategoryController::class, 'index'])->name('item-card-categories.index');
+        Route::get('/get-item-card-categories-data', [InvItemCardCategoryController::class, 'getItemCardCategoryData']);
+        // Create
+        Route::get('/create', [InvItemCardCategoryController::class, 'create']);
+        Route::post('/store', [InvItemCardCategoryController::class, 'store']);
+        // Edit
+        Route::get('{id}/edit', [InvItemCardCategoryController::class, 'edit']);
+        Route::put('{id}/update', [InvItemCardCategoryController::class, 'update']);
+        // Show
+        Route::get('{id}/show', [InvItemCardCategoryController::class, 'show']); // blade
+        Route::get('{id}/get-data-show', [InvItemCardCategoryController::class, 'showJson']); // json
+        // Delete
+        Route::delete('{id}/destroy', [InvItemCardCategoryController::class, 'destroy']);
+        // Exports
+        Route::get('export-excel', [InvItemCardCategoryController::class, 'exportExcel']);
+        Route::get('export-pdf', [InvItemCardCategoryController::class, 'exportPdf']);
+        // Search
+        Route::get('search', [InvItemCardCategoryController::class, 'searchByName']);
+    });
+
+    // Inv Item Cards
+    Route::group(['prefix' => 'item-cards'], function () {
+       Route::get('/', [InvItemCardController::class, 'index'])->name('item-cards.index'); 
+       Route::get('/get-item-cards-data', [InvItemCardController::class, 'getItemCardData']);
+
+       Route::get('/get-categories-names', [InvItemCardController::class, 'getCategoriesNames']); 
+
+       Route::get('/get-categories-data', [InvItemCardController::class, 'getDataForCreate']);
+    //    Route::get('/get-child-uoms/{parentId}', [InvItemCardController::class, 'getChildUom']);
+       Route::get('/create', [InvItemCardController::class, 'create']);
+       Route::post('/store', [InvItemCardController::class, 'store']);
+
+       Route::get('/{id}/show', [InvItemCardController::class, 'showPage']); // blade
+       Route::get('/{id}/show-data', [InvItemCardController::class, 'show']); // json
+
+       Route::get('/{id}/edit', [InvItemCardController::class, 'edit']);
+       Route::post('/{id}/update', [InvItemCardController::class, 'update']);
+
+       Route::delete('/{id}/destroy', [InvItemCardController::class, 'destroy']);
+
+       // filter Item Cards
+       Route::get('/filter', [InvItemCardController::class, 'filter']);
+
+       // Exports
+       Route::get('export-excel', [InvItemCardController::class, 'exportExcel']);
+       Route::get('export-pdf', [InvItemCardController::class, 'exportPdf']);
+
+       // Text Search
+       Route::get('search',[InvItemCardController::class, 'textSearch']);
+    });
+
     // Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
@@ -146,3 +201,4 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'verified']], 
 });
 
 require __DIR__ . '/auth.php';
+

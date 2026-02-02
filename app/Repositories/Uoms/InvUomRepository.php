@@ -6,6 +6,7 @@ use App\Interfaces\Uoms\InvUomInterface;
 use App\Http\Requests\Admin\InvUoms\InvUomRequest;
 use App\Models\Admin;
 use App\Models\InvUom;
+use App\Traits\HasColumnsModel;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -14,6 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class InvUomRepository implements InvUomInterface
 {
+    use HasColumnsModel;
     public function index()
     {
         return view('admin.uoms.index');
@@ -21,14 +23,15 @@ class InvUomRepository implements InvUomInterface
 
     public function getUomData()
     {
-        $data = InvUom::where('com_code', auth()->guard('admin')->user()->com_code)
-            ->orderBy('id', 'desc')->paginate(PAGINATE_COUNT);
+        $data = $this->getColsWhere(InvUom::class, ['*'], 
+            ['com_code' => auth()->guard('admin')->user()->com_code])
+            ->paginate(PAGINATE_COUNT);
 
         if (!empty($data)) {
             foreach ($data as $value) {
-                $value->added_by_admin = Admin::where('id', $value->added_by)->value('name');
+                $value->added_by_admin = $this->getFieldValue(Admin::class, 'name', ['id' => $value->added_by]);
                 if ($value->updated_by != null || $value->updated_by > 0) {
-                    $value->updated_by_admin = Admin::where('id', $value->updated_by)->value('name');
+                    $value->updated_by_admin = $this->getFieldValue(Admin::class, 'name', ['id' => $value->updated_by]);
                 }
             }
         }

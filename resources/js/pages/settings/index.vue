@@ -19,7 +19,7 @@
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><router-link
                                         :to="{ name: 'settings.index' }">الضبط</router-link></li>
-                                <li class="breadcrumb-item active">الضبط</li>
+                                <li class="breadcrumb-item active">عرض</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->

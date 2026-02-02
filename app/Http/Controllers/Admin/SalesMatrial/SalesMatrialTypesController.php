@@ -8,61 +8,61 @@ use App\Interfaces\SalesMatrialTypes\SalesMatrialTypeInterface;
 
 class SalesMatrialTypesController extends Controller
 {
-    private $salesMatrialTypeInterface;
+    private $salesMatrialTypeRepoInterface;
 
-    public function __construct(SalesMatrialTypeInterface $salesMatrialTypeInterface)
+    public function __construct(SalesMatrialTypeInterface $salesMatrialTypeRepoInterface)
     {
-        $this->salesMatrialTypeInterface = $salesMatrialTypeInterface;
+        $this->salesMatrialTypeRepoInterface = $salesMatrialTypeRepoInterface;
     }
 
     public function index()
     {
-        return $this->salesMatrialTypeInterface->index();
+        return $this->salesMatrialTypeRepoInterface->index();
     }
 
     public function getSalesMatrialTypeData()
     {
-        return $this->salesMatrialTypeInterface->getSalesMatrialTypeData();
+        return $this->salesMatrialTypeRepoInterface->getSalesMatrialTypeData();
     }
 
     public function create()
     {
-        return $this->salesMatrialTypeInterface->create();
+        return $this->salesMatrialTypeRepoInterface->create();
     }
 
     public function storeData(SalesMatrialTypesRequest $request)
     {
-        return $this->salesMatrialTypeInterface->storeData($request);
+        return $this->salesMatrialTypeRepoInterface->storeData($request);
     }
 
     public function show($id)
     {
-        return $this->salesMatrialTypeInterface->show($id);
+        return $this->salesMatrialTypeRepoInterface->show($id);
     }
 
     public function edit($id)
     {
-        return $this->salesMatrialTypeInterface->edit($id);
+        return $this->salesMatrialTypeRepoInterface->edit($id);
     }
 
     public function updateData(SalesMatrialTypesRequest $request, $id)
     {
-        return $this->salesMatrialTypeInterface->updateData($request, $id);
+        return $this->salesMatrialTypeRepoInterface->updateData($request, $id);
     }
 
     public function destroy($id)
     {
-        return $this->salesMatrialTypeInterface->destroy($id);
+        return $this->salesMatrialTypeRepoInterface->destroy($id);
     }
 
     public function exportExcel()
     {
-        return $this->salesMatrialTypeInterface->exportExcel();
+        return $this->salesMatrialTypeRepoInterface->exportExcel();
     }
 
     public function exportPdf()
     {
-        return $this->salesMatrialTypeInterface->exportPdf();
+        return $this->salesMatrialTypeRepoInterface->exportPdf();
     }
 }
 

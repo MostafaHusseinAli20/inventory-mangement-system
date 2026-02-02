@@ -3,7 +3,7 @@
     <a href="{{ route('dashboard') }}" class="brand-link">
         <img src="{{ asset('assets/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">نظام ادارة المبيعات</span>
+        <span class="brand-text font-weight-light">نظام ادارة المخازن</span>
     </a>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -111,9 +111,9 @@
                 </li>
 
                 <li
-                    class="nav-item has-treeview {{ (request()->is('admin/sales-matrial-types*') || request()->is('admin/stores*') || request()->is('admin/uoms*') || request()->is('admin/inv_itemcard_categories*') || request()->is('admin/itemcard*') and !request()->is('admin/itemcardBalance*') and !request()->is('admin/stores_inventory*')) ? 'menu-open' : '' }}     ">
+                    class="nav-item has-treeview {{ (request()->is('admin/sales-matrial-types*') || request()->is('admin/stores*') || request()->is('admin/uoms*') || request()->is('admin/item-card-categories*') || request()->is('admin/item-cards*') and !request()->is('admin/itemcardBalance*') and !request()->is('admin/stores_inventory*')) ? 'menu-open' : '' }}     ">
                     <a href="#"
-                        class="nav-link {{ (request()->is('admin/sales-matrial-types*') || request()->is('admin/stores*') || request()->is('admin/uoms*') || request()->is('admin/inv_itemcard_categories*') || request()->is('admin/itemcard*') and !request()->is('admin/itemcardBalance*') and !request()->is('admin/stores_inventory*')) ? 'active' : '' }}">
+                        class="nav-link {{ (request()->is('admin/sales-matrial-types*') || request()->is('admin/stores*') || request()->is('admin/uoms*') || request()->is('admin/item-card-categories*') || request()->is('admin/item-cards*') and !request()->is('admin/itemcardBalance*') and !request()->is('admin/stores_inventory*')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             ضبط المخازن
@@ -134,7 +134,7 @@
                         <li class="nav-item">
                             <a href="{{ route('stores.index') }}"
                                 class="nav-link {{ request()->is('admin/stores*') ? 'active' : '' }}">
-                                
+
                                 <p>
                                     بيانات المخازن
                                 </p>
@@ -144,14 +144,418 @@
                         <li class="nav-item">
                             <a href="{{ route('uoms.index') }}"
                                 class="nav-link {{ request()->is('admin/uoms*') ? 'active' : '' }}">
-                                
+
                                 <p>
                                     بيانات الوحدات
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('item-card-categories.index') }}"
+                                class="nav-link {{ request()->is('admin/item-card-categories*') ? 'active' : '' }}">
+                                <p>
+                                    فئات الاصناف
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('item-cards.index') }}"
+                                class="nav-link {{ request()->is('admin/item-cards*') ? 'active' : '' }}">
+                                <p>
+                                    الاصناف
+                                </p>
+                            </a>
+                        </li>
+
                     </ul>
                 </li>
+
+                <li
+                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                    <a href="#"
+                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            حركات مخزنية
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href=""
+                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                                <p>
+                                    انواع الحسابات المالية
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/accounts*') ? 'active' : '' }}">
+                                <p>
+                                    الشجرة ( الحسابات المالية )
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/customer*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات العملاء
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/delegates*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات المناديب
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    المراقبة والدعم الفني
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li
+                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                    <a href="#"
+                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            المبيعات
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href=""
+                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                                <p>
+                                    انواع الحسابات المالية
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/accounts*') ? 'active' : '' }}">
+                                <p>
+                                    الشجرة ( الحسابات المالية )
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/customer*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات العملاء
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/delegates*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات المناديب
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    المراقبة والدعم الفني
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li
+                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                    <a href="#"
+                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            خدمات داخلية وخارجية
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href=""
+                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                                <p>
+                                    انواع الحسابات المالية
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/accounts*') ? 'active' : '' }}">
+                                <p>
+                                    الشجرة ( الحسابات المالية )
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/customer*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات العملاء
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/delegates*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات المناديب
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    المراقبة والدعم الفني
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li
+                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                    <a href="#"
+                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            حركة شفت الخزينة
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href=""
+                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                                <p>
+                                    انواع الحسابات المالية
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/accounts*') ? 'active' : '' }}">
+                                <p>
+                                    الشجرة ( الحسابات المالية )
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/customer*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات العملاء
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/delegates*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات المناديب
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    المراقبة والدعم الفني
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li
+                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                    <a href="#"
+                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            الصلاحيات
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href=""
+                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                                <p>
+                                    انواع الحسابات المالية
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/accounts*') ? 'active' : '' }}">
+                                <p>
+                                    الشجرة ( الحسابات المالية )
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/customer*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات العملاء
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/delegates*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات المناديب
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    المراقبة والدعم الفني
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li
+                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                    <a href="#"
+                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            التقارير
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href=""
+                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                                <p>
+                                    انواع الحسابات المالية
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/accounts*') ? 'active' : '' }}">
+                                <p>
+                                    الشجرة ( الحسابات المالية )
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/customer*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات العملاء
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/delegates*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات المناديب
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    المراقبة والدعم الفني
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li
+                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                    <a href="#"
+                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            المراقبة والدعم الفني
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href=""
+                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                                <p>
+                                    انواع الحسابات المالية
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/accounts*') ? 'active' : '' }}">
+                                <p>
+                                    الشجرة ( الحسابات المالية )
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/customer*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات العملاء
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link {{ request()->is('admin/delegates*') ? 'active' : '' }}">
+                                <p>
+                                    حسابات المناديب
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    المراقبة والدعم الفني
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
         </nav>
         <!-- /.sidebar-menu -->
     </div>
