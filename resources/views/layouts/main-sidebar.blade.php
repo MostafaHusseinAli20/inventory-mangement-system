@@ -56,9 +56,9 @@
                 {{-- @endif --}}
 
                 <li
-                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                    class="nav-item has-treeview {{ (request()->is('admin/account-types*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
                     <a href="#"
-                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        class="nav-link {{ (request()->is('admin/account-types*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             الحسابات
@@ -67,15 +67,16 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href=""
-                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                            <a href="{{ route('account-types.index') }}"
+                                class="nav-link {{ request()->is('admin/account-types*') ? 'active' : '' }}">
                                 <p>
                                     انواع الحسابات المالية
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link {{ request()->is('admin/accounts*') ? 'active' : '' }}">
+                            <a href="{{ route('accounts.index') }}" 
+                                class="nav-link {{ request()->is('admin/accounts*') ? 'active' : '' }}">
                                 <p>
                                     الشجرة ( الحسابات المالية )
                                 </p>
@@ -94,18 +95,6 @@
                                     حسابات المناديب
                                 </p>
                             </a>
-                        </li>
-
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link ">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    المراقبة والدعم الفني
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                            </ul>
                         </li>
                     </ul>
                 </li>
@@ -171,7 +160,7 @@
                     </ul>
                 </li>
 
-                <li
+                {{-- <li
                     class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
                     <a href="#"
                         class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
@@ -226,10 +215,10 @@
                     </ul>
                 </li>
 
-                <li
-                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                 <li
+                    class="nav-item has-treeview {{ (request()->is('admin/0*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
                     <a href="#"
-                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        class="nav-link {{ (request()->is('admin/0*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             المبيعات
@@ -239,7 +228,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href=""
-                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('admin/0*') ? 'active' : '' }}">
                                 <p>
                                     انواع الحسابات المالية
                                 </p>
@@ -282,9 +271,9 @@
                 </li>
 
                 <li
-                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                    class="nav-item has-treeview {{ (request()->is('admin/0*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
                     <a href="#"
-                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        class="nav-link {{ (request()->is('admin/0*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             خدمات داخلية وخارجية
@@ -294,7 +283,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href=""
-                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('admin/0*') ? 'active' : '' }}">
                                 <p>
                                     انواع الحسابات المالية
                                 </p>
@@ -337,9 +326,9 @@
                 </li>
 
                 <li
-                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                    class="nav-item has-treeview {{ (request()->is('admin/0*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
                     <a href="#"
-                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        class="nav-link {{ (request()->is('admin/0*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             حركة شفت الخزينة
@@ -349,7 +338,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href=""
-                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('admin/0*') ? 'active' : '' }}">
                                 <p>
                                     انواع الحسابات المالية
                                 </p>
@@ -392,9 +381,9 @@
                 </li>
 
                 <li
-                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                    class="nav-item has-treeview {{ (request()->is('admin/0*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
                     <a href="#"
-                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        class="nav-link {{ (request()->is('admin/0*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             الصلاحيات
@@ -404,7 +393,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href=""
-                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('admin/0*') ? 'active' : '' }}">
                                 <p>
                                     انواع الحسابات المالية
                                 </p>
@@ -447,9 +436,9 @@
                 </li>
 
                 <li
-                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                    class="nav-item has-treeview {{ (request()->is('admin/0*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
                     <a href="#"
-                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        class="nav-link {{ (request()->is('admin/0*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             التقارير
@@ -459,7 +448,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href=""
-                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('admin/0*') ? 'active' : '' }}">
                                 <p>
                                     انواع الحسابات المالية
                                 </p>
@@ -502,9 +491,9 @@
                 </li>
 
                 <li
-                    class="nav-item has-treeview {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
+                    class="nav-item has-treeview {{ (request()->is('admin/0*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'menu-open' : '' }}     ">
                     <a href="#"
-                        class="nav-link {{ (request()->is('admin/accountTypes*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
+                        class="nav-link {{ (request()->is('admin/0*') || request()->is('admin/accounts*') || request()->is('admin/customer*') || request()->is('admin/suppliers_categories*') || request()->is('admin/supplier*') || (request()->is('admin/collect_transaction*') || request()->is('admin/exchange_transaction*') || request()->is('admin/delegates*'))) && !request()->is('admin/suppliers_orders*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             المراقبة والدعم الفني
@@ -514,7 +503,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href=""
-                                class="nav-link {{ request()->is('admin/accountTypes*') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('admin/0*') ? 'active' : '' }}">
                                 <p>
                                     انواع الحسابات المالية
                                 </p>
@@ -554,7 +543,7 @@
                             </ul>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
         </nav>
         <!-- /.sidebar-menu -->

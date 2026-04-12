@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\Accounts\AccountController;
+use App\Http\Controllers\Admin\AccountTypes\AccountTypeController;
 use App\Http\Controllers\Admin\InvItemCardCategories\InvItemCardCategoryController;
 use App\Http\Controllers\Admin\InvItemCards\InvItemCardController;
 use App\Http\Controllers\Admin\SalesMatrial\SalesMatrialTypesController;
@@ -20,12 +22,6 @@ Route::get('/main', function () {
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'verified']], function () {
 
     define('PAGINATE_COUNT', 10);
-    // Accounts
-    Route::group(['prefix' => 'accounts'], function () {
-        Route::get('/', function () {
-            return view('admin.accounts.index');
-        })->name('accounts.index');
-    });
 
     // Settings
     Route::group(['prefix' => 'settings'], function () {
@@ -187,6 +183,42 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'verified']], 
 
        // Text Search
        Route::get('search',[InvItemCardController::class, 'textSearch']);
+    });
+
+    // Accounts Types
+    Route::group(['prefix' => 'account-types'], function () {
+        Route::get('/', [AccountTypeController::class, 'index'])->name('account-types.index');
+        Route::get('/get-accounts-types-data', [AccountTypeController::class, 'getData']);
+
+        // Exports
+        Route::get('export-excel', [AccountTypeController::class, 'exportExcel']);
+        Route::get('export-pdf', [AccountTypeController::class, 'exportPdf']);
+    });
+    
+    // Accounts
+    Route::group(['prefix' => 'accounts'], function () {
+        Route::get('/', [AccountController::class, 'index'])->name('accounts.index'); 
+        Route::get('/get-accounts-data', [AccountController::class, 'getData']);
+        //Create
+        Route::get('/create', [AccountController::class, 'create'])->name('accounts.create');
+        // Get Data For Create
+        Route::get('/get-account-types-data', [AccountController::class, 'getAccountTypesAndParentAccounts']);
+        // Store
+        Route::post('/store', [AccountController::class, 'store']);
+        // Show Item
+        Route::get('/{id}/get-item-data', [AccountController::class, 'getItem']);
+        // Edit & Update
+        Route::get('/{id}/edit', [AccountController::class, 'edit']);
+        Route::put('/{id}/update', [AccountController::class, 'update']);
+
+        // Get Parent Accounts
+        Route::get('/get-parent-accounts-data/{id}', [AccountController::class, 'getParentAccountData']);
+
+        // Search And Filter
+        Route::get('/search-filter-accounts', [AccountController::class, 'searchFilterAccounts']);
+        // Exports
+        Route::get('export-excel', [AccountController::class, 'exportExcel']);
+        Route::get('export-pdf', [AccountController::class, 'exportPdf']);
     });
 
     // Profile Management

@@ -23,6 +23,10 @@ import ItemCardIndexPage from '../pages/item-cards/index.vue';
 import ItemCardCreatePage from '../pages/item-cards/create.vue';
 import ItemCardEditPage from '../pages/item-cards/edit.vue';
 import ItemCardShowPage from '../pages/item-cards/show.vue';
+import AccountsTypesPage from '../pages/accounts-types/index.vue';
+import AccountPage from '../pages/accounts/index.vue';
+import AccountCreatePage from '../pages/accounts/create.vue';
+import AccountEditPage from '../pages/accounts/edit.vue';
 
 const routes = [
     // Settings
@@ -157,6 +161,30 @@ const routes = [
         path: "/admin/item-cards/:id/show",
         name: "item-cards.show",
         component: ItemCardShowPage,
+    },
+
+    // Account Types
+    {
+        path: "/admin/account-types",
+        name: "accounts-types.index",
+        component: AccountsTypesPage,
+    },
+
+    // Accounts
+    {
+        path: "/admin/accounts",
+        name: "accounts.index",
+        component: AccountPage,
+    },
+    {
+        path: "/admin/accounts/create",
+        name: "accounts.create",
+        component: AccountCreatePage,
+    },
+    {
+        path: "/admin/accounts/:id/edit",
+        name: "accounts.edit",
+        component: AccountEditPage,
     },
 ];
 
