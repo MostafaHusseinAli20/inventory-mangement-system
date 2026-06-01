@@ -27,4 +27,5 @@
   <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
   <!-- Custom style for RTL -->
   <link rel="stylesheet" href="{{ asset('assets/dist/css/custom.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   @stack('styles')

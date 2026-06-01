@@ -14,7 +14,7 @@ class StoreSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('stores')->truncate();
+        // DB::table('stores')->truncate();
         Store::factory(20)->create();
     }
 }

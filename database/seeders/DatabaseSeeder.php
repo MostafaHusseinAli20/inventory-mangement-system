@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             StoreSeeder::class,
             TreasurySeeder::class,
-            SalesMatrialTypeSeeder::class
+            SalesMatrialTypeSeeder::class,
+            CreateAccountTypesSeeder::class
         ]);
     }
 }

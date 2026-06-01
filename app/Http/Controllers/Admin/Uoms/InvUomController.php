@@ -9,70 +9,70 @@ use Illuminate\Http\Request;
 
 class InvUomController extends Controller
 {
-    private $invUomInterface;
+    private $invUomRepoInterface;
 
-    public function __construct(InvUomInterface $invUomInterface)
+    public function __construct(InvUomInterface $invUomRepoInterface)
     {
-        $this->invUomInterface = $invUomInterface;
+        $this->invUomRepoInterface = $invUomRepoInterface;
     }
     
     public function index()
     {
-        return $this->invUomInterface->index();
+        return $this->invUomRepoInterface->index();
     }
 
     public function getUomData()
     {
-        return $this->invUomInterface->getUomData();
+        return $this->invUomRepoInterface->getUomData();
     }
 
     public function create()
     {
-        return $this->invUomInterface->create();
+        return $this->invUomRepoInterface->create();
     }
 
     public function store(InvUomRequest $request)
     {
-        return $this->invUomInterface->store($request);
+        return $this->invUomRepoInterface->store($request);
     }
 
     public function show($id)
     {
-        return $this->invUomInterface->show($id);
+        return $this->invUomRepoInterface->show($id);
     }
 
     public function edit()
     {
-        return $this->invUomInterface->edit();
+        return $this->invUomRepoInterface->edit();
     }
 
     public function update(InvUomRequest $request)
     {
-        return $this->invUomInterface->update($request);
+        return $this->invUomRepoInterface->update($request);
     }
 
     public function destroy($id)
     {
-        return $this->invUomInterface->destroy($id);
+        return $this->invUomRepoInterface->destroy($id);
     }
 
     public function exportExcel()
     {
-        return $this->invUomInterface->exportExcel();
+        return $this->invUomRepoInterface->exportExcel();
     }
 
     public function exportPdf()
     {
-        return $this->invUomInterface->exportPdf();
+        return $this->invUomRepoInterface->exportPdf();
     }
 
     public function searchByName(Request $request)
     {
-        return $this->invUomInterface->searchByName($request);
+        return $this->invUomRepoInterface->searchByName($request);
     }
 
     public function filterByType(Request $request)
     {
-        return $this->invUomInterface->filterByType($request);
+        return $this->invUomRepoInterface->filterByType($request);
     }
 }

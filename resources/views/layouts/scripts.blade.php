@@ -35,6 +35,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('assets/dist/js/demo.js') }}"></script>
 <!-- page script -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
   $(function () {
     $("#example1").DataTable();

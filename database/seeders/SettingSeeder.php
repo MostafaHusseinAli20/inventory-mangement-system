@@ -14,7 +14,7 @@ class SettingSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('settings')->truncate();
+        // DB::table('settings')->truncate();
         Setting::create([
             'system_name' => 'الفرجاني',
             'address' => 'حلمية الزيتون',

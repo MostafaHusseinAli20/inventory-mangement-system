@@ -14,7 +14,7 @@ class TreasurySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('treasuries')->truncate();
+        // DB::table('treasuries')->truncate();
         Treasury::factory(20)->create();
     }
 }

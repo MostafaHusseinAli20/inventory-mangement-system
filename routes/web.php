@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\Accounts\AccountController;
+use App\Http\Controllers\Admin\AccountTypes\AccountTypeController;
+use App\Http\Controllers\Admin\InvItemCardCategories\InvItemCardCategoryController;
+use App\Http\Controllers\Admin\InvItemCards\InvItemCardController;
 use App\Http\Controllers\Admin\SalesMatrial\SalesMatrialTypesController;
 use App\Http\Controllers\Admin\Settings\SettingController;
 use App\Http\Controllers\Admin\Stores\StoreController;
@@ -18,12 +22,6 @@ Route::get('/main', function () {
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'verified']], function () {
 
     define('PAGINATE_COUNT', 10);
-    // Accounts
-    Route::group(['prefix' => 'accounts'], function () {
-        Route::get('/', function () {
-            return view('admin.accounts.index');
-        })->name('accounts.index');
-    });
 
     // Settings
     Route::group(['prefix' => 'settings'], function () {
@@ -134,6 +132,95 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'verified']], 
        Route::get('filter-by-type', [InvUomController::class, 'filterByType']);
     });
 
+    // Inv Item Card Categories
+    Route::group(['prefix' => 'item-card-categories'], function () {
+        Route::get('/', [InvItemCardCategoryController::class, 'index'])->name('item-card-categories.index');
+        Route::get('/get-item-card-categories-data', [InvItemCardCategoryController::class, 'getItemCardCategoryData']);
+        // Create
+        Route::get('/create', [InvItemCardCategoryController::class, 'create']);
+        Route::post('/store', [InvItemCardCategoryController::class, 'store']);
+        // Edit
+        Route::get('{id}/edit', [InvItemCardCategoryController::class, 'edit']);
+        Route::put('{id}/update', [InvItemCardCategoryController::class, 'update']);
+        // Show
+        Route::get('{id}/show', [InvItemCardCategoryController::class, 'show']); // blade
+        Route::get('{id}/get-data-show', [InvItemCardCategoryController::class, 'showJson']); // json
+        // Delete
+        Route::delete('{id}/destroy', [InvItemCardCategoryController::class, 'destroy']);
+        // Exports
+        Route::get('export-excel', [InvItemCardCategoryController::class, 'exportExcel']);
+        Route::get('export-pdf', [InvItemCardCategoryController::class, 'exportPdf']);
+        // Search
+        Route::get('search', [InvItemCardCategoryController::class, 'searchByName']);
+    });
+
+    // Inv Item Cards
+    Route::group(['prefix' => 'item-cards'], function () {
+       Route::get('/', [InvItemCardController::class, 'index'])->name('item-cards.index'); 
+       Route::get('/get-item-cards-data', [InvItemCardController::class, 'getItemCardData']);
+
+       Route::get('/get-categories-names', [InvItemCardController::class, 'getCategoriesNames']); 
+
+       Route::get('/get-categories-data', [InvItemCardController::class, 'getDataForCreate']);
+    //    Route::get('/get-child-uoms/{parentId}', [InvItemCardController::class, 'getChildUom']);
+       Route::get('/create', [InvItemCardController::class, 'create']);
+       Route::post('/store', [InvItemCardController::class, 'store']);
+
+       Route::get('/{id}/show', [InvItemCardController::class, 'showPage']); // blade
+       Route::get('/{id}/show-data', [InvItemCardController::class, 'show']); // json
+
+       Route::get('/{id}/edit', [InvItemCardController::class, 'edit']);
+       Route::post('/{id}/update', [InvItemCardController::class, 'update']);
+
+       Route::delete('/{id}/destroy', [InvItemCardController::class, 'destroy']);
+
+       // filter Item Cards
+       Route::get('/filter', [InvItemCardController::class, 'filter']);
+
+       // Exports
+       Route::get('export-excel', [InvItemCardController::class, 'exportExcel']);
+       Route::get('export-pdf', [InvItemCardController::class, 'exportPdf']);
+
+       // Text Search
+       Route::get('search',[InvItemCardController::class, 'textSearch']);
+    });
+
+    // Accounts Types
+    Route::group(['prefix' => 'account-types'], function () {
+        Route::get('/', [AccountTypeController::class, 'index'])->name('account-types.index');
+        Route::get('/get-accounts-types-data', [AccountTypeController::class, 'getData']);
+
+        // Exports
+        Route::get('export-excel', [AccountTypeController::class, 'exportExcel']);
+        Route::get('export-pdf', [AccountTypeController::class, 'exportPdf']);
+    });
+    
+    // Accounts
+    Route::group(['prefix' => 'accounts'], function () {
+        Route::get('/', [AccountController::class, 'index'])->name('accounts.index'); 
+        Route::get('/get-accounts-data', [AccountController::class, 'getData']);
+        //Create
+        Route::get('/create', [AccountController::class, 'create'])->name('accounts.create');
+        // Get Data For Create
+        Route::get('/get-account-types-data', [AccountController::class, 'getAccountTypesAndParentAccounts']);
+        // Store
+        Route::post('/store', [AccountController::class, 'store']);
+        // Show Item
+        Route::get('/{id}/get-item-data', [AccountController::class, 'getItem']);
+        // Edit & Update
+        Route::get('/{id}/edit', [AccountController::class, 'edit']);
+        Route::put('/{id}/update', [AccountController::class, 'update']);
+
+        // Get Parent Accounts
+        Route::get('/get-parent-accounts-data/{id}', [AccountController::class, 'getParentAccountData']);
+
+        // Search And Filter
+        Route::get('/search-filter-accounts', [AccountController::class, 'searchFilterAccounts']);
+        // Exports
+        Route::get('export-excel', [AccountController::class, 'exportExcel']);
+        Route::get('export-pdf', [AccountController::class, 'exportPdf']);
+    });
+
     // Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
@@ -146,3 +233,4 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin', 'verified']], 
 });
 
 require __DIR__ . '/auth.php';
+

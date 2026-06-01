@@ -15,6 +15,18 @@ import StoreEdirPage from '../pages/stores/edit.vue';
 import UomIndexPage from '../pages/uoms/index.vue';
 import UomCreatePage from '../pages/uoms/create.vue';
 import UomEditPage from '../pages/uoms/edit.vue';
+import ItemCardCategoryIndexPage from '../pages/item-card-categories/index.vue';
+import ItemCardCategoryCreatePage from '../pages/item-card-categories/create.vue';
+import ItemCardCategoryShowPage from '../pages/item-card-categories/show.vue';
+import ItemCardCategoryEditPage from '../pages/item-card-categories/edit.vue';
+import ItemCardIndexPage from '../pages/item-cards/index.vue';
+import ItemCardCreatePage from '../pages/item-cards/create.vue';
+import ItemCardEditPage from '../pages/item-cards/edit.vue';
+import ItemCardShowPage from '../pages/item-cards/show.vue';
+import AccountsTypesPage from '../pages/accounts-types/index.vue';
+import AccountPage from '../pages/accounts/index.vue';
+import AccountCreatePage from '../pages/accounts/create.vue';
+import AccountEditPage from '../pages/accounts/edit.vue';
 
 const routes = [
     // Settings
@@ -105,6 +117,74 @@ const routes = [
         path: "/admin/uoms/:id/edit",
         name: "uoms.edit",
         component: UomEditPage,
+    },
+
+    // item-card-categories
+    {
+        path: "/admin/item-card-categories",
+        name: "item-card-categories.index",
+        component: ItemCardCategoryIndexPage,
+    },
+    {
+        path: "/admin/item-card-categories/create",
+        name: "item-card-categories.create",
+        component: ItemCardCategoryCreatePage,
+    },
+    {
+        path: "/admin/item-card-categories/:id/show",
+        name: "item-card-categories.show",
+        component: ItemCardCategoryShowPage,
+    },
+    {
+        path: "/admin/item-card-categories/:id/edit",
+        name: "item-card-categories.edit",
+        component: ItemCardCategoryEditPage,
+    },
+
+    //item-cards
+    {
+        path: "/admin/item-cards",
+        name: "item-cards.index",
+        component: ItemCardIndexPage,
+    },
+    {
+        path: "/admin/item-cards/create",
+        name: "item-cards.create",
+        component: ItemCardCreatePage,
+    },
+    {
+        path: "/admin/item-cards/:id/edit",
+        name: "item-cards.edit",
+        component: ItemCardEditPage,
+    },
+    {
+        path: "/admin/item-cards/:id/show",
+        name: "item-cards.show",
+        component: ItemCardShowPage,
+    },
+
+    // Account Types
+    {
+        path: "/admin/account-types",
+        name: "accounts-types.index",
+        component: AccountsTypesPage,
+    },
+
+    // Accounts
+    {
+        path: "/admin/accounts",
+        name: "accounts.index",
+        component: AccountPage,
+    },
+    {
+        path: "/admin/accounts/create",
+        name: "accounts.create",
+        component: AccountCreatePage,
+    },
+    {
+        path: "/admin/accounts/:id/edit",
+        name: "accounts.edit",
+        component: AccountEditPage,
     },
 ];
 
